@@ -1,0 +1,53 @@
+cd /mnt
+mkdir opt
+cd opt
+pwd
+
+screen
+curl -O https://archive.mariadb.org//mariadb-5.5.24/kvm-bintar-hardy-amd64/mariadb-5.5.24-linux-x86_64.tar.gz
+###Ctrl-a + d,同时按下Ctrl和a,然后释放,然后单击d
+groupadd --system bing_mariadb
+mkdir mariadb-5.5.24-linux-x86_64
+ln -s mariadb-5.5.24-linux-x86_64 mariadb
+mkdir /opt/bing_mariadb
+mount --bind /mnt/opt/mariadb /opt/bing_mariadb
+useradd -c "mariadb server" -d /opt/bing_mariadb -g bing_mariadb --system bing_mariadb
+cd /mnt/opt/
+
+mv mariadb-5.5.24-linux-x86_64.tar.gz mariadb-5.5.24-linux-x86_64
+cd mariadb-5.5.24-linux-x86_64
+mv mariadb-5.5.24-linux-x86_64/* /mnt/opt/mariadb-5.5.24-linux-x86_64
+mv mariadb-5.5.24-linux-x86_64.tar.gz /mnt/opt
+
+cd ../
+
+chown -R bing_mariadb:bing_mariadb mariadb-5.5.24-linux-x86_64/
+
+mkdir mariadb-data
+mkdir /opt/bing_mariadb_data
+mount --bind /mnt/opt/mariadb-data /opt/bing_mariadb_data
+chown -R bing_mariadb:bing_mariadb mariadb-data/
+cp mariadb/support-files/my-medium.cnf mariadb-data/my.cnf
+chown -R bing_mariadb:bing_mariadb mariadb-data/my.cnf
+
+cp mariadb/support-files/mysql.server /etc/init.d/bing_mariadb1
+chmod +x /etc/init.d/bing_mariadb1
+
+cd /mnt/opt/mariadb
+scripts/mysql_install_db --defaults-file=/opt/bing_mariadb_data/my.cnf
+/etc/init.d/bing_mariadb1 start
+
+cd /etc/init.d
+chkconfig --add bing_mariadb1
+chkconfig --levels 3 bing_mariadb1 on
+/opt/bing_mariadb/bin/mysqladmin --socket=/opt/bing_mariadb_data/mariadb.sock -u root password
+
+/opt/mariadb/bin/mysqldump --socket=/opt/mariadb_data/bing/mariadb.sock -uroot -p ef > /mnt/sqlBak/dump20201021.txt
+
+mysql --socket=/opt/bing_mariadb_data/mariadb.sock -uroot -p
+
+CREATE DATABASE ef;
+ALTER DATABASE ef CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+use ef;
+set names utf8mb4;
+source /mnt/sqlBak/dump20201021.txt;
