@@ -30,6 +30,9 @@ chown -R bing_mariadb:bing_mariadb mariadb-data/
 cp mariadb/support-files/my-medium.cnf mariadb-data/my.cnf
 chown -R bing_mariadb:bing_mariadb mariadb-data/my.cnf
 
+mkdir /opt/bing_mariadb_data/tmp
+chown -R bing_mariadb:bing_mariadb /mnt/opt/mariadb-data/tmp
+
 cp mariadb/support-files/mysql.server /etc/init.d/bing_mariadb1
 chmod +x /etc/init.d/bing_mariadb1
 
