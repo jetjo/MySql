@@ -33,13 +33,27 @@ chown -R bing_mariadb:bing_mariadb mariadb-data/my.cnf
 mkdir /opt/bing_mariadb_data/tmp
 chown -R bing_mariadb:bing_mariadb /mnt/opt/mariadb-data/tmp
 
+chown -R bing_mariadb:bing_mariadb /mnt/opt/mariadb-data/test
+chown -R bing_mariadb:bing_mariadb /mnt/opt/mariadb-data/mysql
+chown -R bing_mariadb:bing_mariadb /mnt/opt/mariadb-data/performance_schema
+
 cp mariadb/support-files/mysql.server /etc/init.d/bing_mariadb1
 chmod +x /etc/init.d/bing_mariadb1
 
 cd /mnt/opt/mariadb
 #####scripts/mysql_install_db --defaults-file=/opt/bing_mariadb_data/my.cnf
 /mnt/opt/mariadb/scripts/mysql_install_db --defaults-file=/opt/bing_mariadb_data/my.cnf
+
+
+chown -R bing_mariadb:bing_mariadb /mnt/opt/mariadb-data/test
+chown -R bing_mariadb:bing_mariadb /mnt/opt/mariadb-data/mysql
+chown -R bing_mariadb:bing_mariadb /mnt/opt/mariadb-data/performance_schema
+
 /etc/init.d/bing_mariadb1 start
+
+chown -R bing_mariadb:bing_mariadb /mnt/opt/mariadb-data/test
+chown -R bing_mariadb:bing_mariadb /mnt/opt/mariadb-data/mysql
+chown -R bing_mariadb:bing_mariadb /mnt/opt/mariadb-data/performance_schema
 
 cd /etc/init.d
 chkconfig --add bing_mariadb1
