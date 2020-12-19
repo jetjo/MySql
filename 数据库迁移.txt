@@ -37,7 +37,8 @@ cp mariadb/support-files/mysql.server /etc/init.d/bing_mariadb1
 chmod +x /etc/init.d/bing_mariadb1
 
 cd /mnt/opt/mariadb
-scripts/mysql_install_db --defaults-file=/opt/bing_mariadb_data/my.cnf
+#####scripts/mysql_install_db --defaults-file=/opt/bing_mariadb_data/my.cnf
+/mnt/opt/mariadb/scripts/mysql_install_db --defaults-file=/opt/bing_mariadb_data/my.cnf
 /etc/init.d/bing_mariadb1 start
 
 cd /etc/init.d
@@ -45,7 +46,9 @@ chkconfig --add bing_mariadb1
 chkconfig --levels 3 bing_mariadb1 on
 /opt/bing_mariadb/bin/mysqladmin --socket=/opt/bing_mariadb_data/mariadb.sock -u root password
 
-/opt/mariadb/bin/mysqldump --socket=/opt/mariadb_data/bing/mariadb.sock -uroot -p ef > /mnt/sqlBak/dump20201021.txt
+###/opt/mariadb/bin/mysqldump --socket=/opt/mariadb_data/bing/mariadb.sock -uroot -p ef > /mnt/sqlBak/dump20201021.txt
+
+/opt/bing_mariadb/bin/mysqldump --socket=/opt/bing_mariadb_data/mariadb.sock -uroot -p ef > /mnt/sqlBak/dump20201219.txt
 
 mysql --socket=/opt/bing_mariadb_data/mariadb.sock -uroot -p
 
