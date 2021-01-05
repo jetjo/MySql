@@ -73,3 +73,5 @@ set names utf8mb4;
 source /mnt/sqlBak/dump20201021.txt;
 
 source C:\Users\m1596\Documents\dump20201219.txt;
+
+insert into __efmigrationshistory values('20200826100807_AddGardenAndDepart','3.1.7');
